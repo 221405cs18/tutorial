@@ -6,45 +6,52 @@
 #include <vector>
 using namespace std;
 
-void peterAndJohn(vector<int> &vec){
-    int peter=0, john=0, j=0, p=0;
-    vector<int>::iterator it=vec.begin();
-    while(vec.size()!=0){
-        if(p>=j and vec.size()!=0){
-            if(*it > vec[vec.size()-1] or vec.size()==1){
+class PeterJohn{
+    int n,x;
+    vector<int> v;
+    public:
+    void setvector(){
+        cin >> n;
+        for(int i=0; i<n ;i++){
+        cin>>x;
+        v.push_back(x);
+    }
+    }
+    void peterAndJohn(){
+    int peter=0, john=0, left=0, right=0;
+    vector<int>::iterator it=v.begin();
+    while(v.size()!=0){
+        if(right>=left and v.size()!=0){
+            if(*it > v[v.size()-1] or v.size()==1){
                 peter+=*it;
-                vec.erase(it);
-                p++;
+                v.erase(it);
+                right++;
             }else{
-                peter+=vec[vec.size()-1];
-                vec.pop_back();
-                p++;
+                peter+=v[v.size()-1];
+                v.pop_back();
+                right++;
             }
         }
-        if(j<p and vec.size()!=0){
-            if(*it > vec[vec.size()-1] or vec.size()==1){
+        if(left<right and v.size()!=0){
+            if(*it > v[v.size()-1] or v.size()==1){
                 john+=*it;
-                vec.erase(it);
-                j++;
+                v.erase(it);
+                left++;
             }else{
-                john+=vec[vec.size()-1];
-                vec.pop_back();
-                j++;
+                john+=v[v.size()-1];
+                v.pop_back();
+                left++;
             }
         }
     }
     cout<<peter<<" "<<john<<endl;
 }
+};
 
 int main(){
-    int n,x;
-    vector<int> cards;
-    cin>>n;
-    for(int i=0; i<n ;i++){
-        cin>>x;
-        cards.push_back(x);
-    }
-    peterAndJohn(cards);
+    PeterJohn pj;
+    pj.setvector();
+    pj.peterAndJohn();
     
     return 0;
 }
