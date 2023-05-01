@@ -1,0 +1,120 @@
+#include <iostream>
+using namespace std;
+
+class Node{
+public:
+    int value;
+    Node *next;
+    Node(){};
+    Node(int x){};
+    Node(int x, Node *n){};
+};
+
+class List{
+private:
+    Node* head;
+public:
+    List(){head = nullptr;};
+    
+    Node* insert_front(int x);
+    Node* insert_back(int x){
+        Node *newnode = new Node();
+        newnode->value=x;
+        newnode->next=nullptr;
+        if(head==nullptr){head=newnode; return head;}
+        Node *h=head;
+        while(h->next != nullptr){
+            h=h->next;
+        }
+        h->next=newnode;
+        return head;
+    };
+    
+    Node* erase_front();
+    Node* erase_back();
+    
+    void displayList(){
+        Node *h=head;
+        while(h != nullptr){
+            cout << h->value << " ";
+            h=h->next;
+        }
+        cout << endl;
+    };
+ 
+    int size();
+    void bubbleSort(){
+        Node *h1=head;
+        Node *h2=nullptr;
+        bool flag=false;
+        while(h1 != nullptr){
+            h2=h1->next;//10 1 6 7 3
+            while(h2 != nullptr){
+                if(h1->value > h2->value){
+                    flag = true;
+                    Node *temp = new Node();
+                    temp->value = h2->value;//1 6 7 3
+                    h2->value = h1->value;
+                    h1->value = temp->value;
+                }
+                h2=h2->next;
+            }
+            h1=h1->next;
+            if(!flag){break;}
+        }
+    };
+    void selectionSort(){
+        Node *h1 = head;
+        Node *h2 = nullptr;
+        bool flag=false;
+        while(h1 != nullptr){
+            Node *min = new Node();
+            min->value = h1->value;
+            Node *temp = new Node();
+            h2=h1->next;
+            while(h2 != nullptr){
+                if(h2->value < min->value){
+                    min = h2;
+                }
+                h2=h2->next;
+            }
+            if(min->value != h1->value){
+                flag = true;
+            temp->value = h1->value;
+            h1->value=min->value;
+            min->value=temp->value;
+            }
+            h1=h1->next;
+            if(!flag){break;}
+        }
+    };
+
+    //ADDITIONAL POINTS
+    //void quickSort();
+    //void insertionSort();
+};
+int main(int argc, const char * argv[]) {
+ List l;
+ l.insert_back(2);
+ l.insert_back(10);
+ l.insert_back(1);
+ l.insert_back(6);
+ l.insert_back(7);
+ l.insert_back(3);
+ l.displayList();
+ l.bubbleSort();
+ l.displayList();
+ 
+ List l1;
+ l1.insert_back(34);
+ l1.insert_back(1);
+ l1.insert_back(90);
+ l1.insert_back(61);
+ l1.insert_back(57);
+ l1.insert_back(9);
+ l1.insert_back(7);
+ l1.displayList();
+ l1.selectionSort();
+ l1.displayList();
+    return 0;
+}
